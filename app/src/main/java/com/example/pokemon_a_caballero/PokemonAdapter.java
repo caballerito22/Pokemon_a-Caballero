@@ -36,6 +36,9 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
 
         textoPokemonName.setText(pokemon.getName());
         textoPokemonSpecie.setText(pokemon.getSpecies());
+/*
+        Glide.with(getContext()).load(pokemon.getSprite()).into(imgPokemonSprite);
+*/
 
 
 
