@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class pokemonDetailsFragment extends Fragment {
 
         if (args != null){
             Pokemon pokemon = (Pokemon) args.getSerializable("pokemon");
-            
+            Log.d("XXX",pokemon.toString());
         }
 
         return inflater.inflate(R.layout.fragment_pokemon_details, container, false);
