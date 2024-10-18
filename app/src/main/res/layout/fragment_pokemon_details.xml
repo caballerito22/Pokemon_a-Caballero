@@ -17,12 +17,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textPokemonDetailName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="209dp"
-        tools:layout_editor_absoluteY="46dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
