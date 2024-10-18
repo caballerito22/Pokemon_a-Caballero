@@ -52,12 +52,17 @@ public class FirstFragment extends Fragment {
                 pokemon);
         binding.listaPokemons.setAdapter(adapter);
 
+        //aqui va binding
+
+
+        //añadir al final, args
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Pokemon> pokemons = PokeAPI.buscar();
             getActivity().runOnUiThread(() -> {
                 for (Pokemon p : pokemons){
-                    pokemon.add(p.toString());
+                    pokemon.add(p.getName()); //o toString
                 }
                 adapter.notifyDataSetChanged();
             });

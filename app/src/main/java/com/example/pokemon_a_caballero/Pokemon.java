@@ -54,4 +54,15 @@ public class Pokemon {
     public void setSprite(String sprite) {
         this.sprite = sprite;
     }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", species='" + species + '\'' +
+                ", weight=" + weight +
+                ", sprite='" + sprite + '\'' +
+                '}';
+    }
 }
