@@ -57,7 +57,7 @@ public class FirstFragment extends Fragment {
             ArrayList<Pokemon> pokemons = PokeAPI.buscar();
             getActivity().runOnUiThread(() -> {
                 for (Pokemon p : pokemons){
-                    pokemon.add(p.toString());
+                    pokemon.add(p.getName()); //o toString
                 }
                 adapter.notifyDataSetChanged();
             });
