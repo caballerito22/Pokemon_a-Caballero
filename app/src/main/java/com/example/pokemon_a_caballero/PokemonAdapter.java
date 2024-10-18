@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 public class PokemonAdapter extends ArrayAdapter<Pokemon> {
     public PokemonAdapter(@NonNull Context context, int resource, @NonNull Pokemon[] objects) {
@@ -25,9 +28,11 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
 
         TextView textoPokemonName = convertView.findViewById(R.id.textoPokemonName);
         TextView textoPokemonSpecie = convertView.findViewById(R.id.textoPokemonSpecie);
+        ImageView imgPokemonSprite = convertView.findViewById(R.id.imgPokemonSprite);
 
         textoPokemonName.setText(pokemon.getName());
         textoPokemonSpecie.setText(pokemon.getSpecies());
+        Glide.with(getContext()).load(pokemon.getSprite()).into(imgPokemonSprite);
 
 
 
