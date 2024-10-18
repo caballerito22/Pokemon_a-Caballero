@@ -22,9 +22,15 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Pokemon pokemon = getItem(position);
-
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        convertView = inflater.inflate(R.layout.pokemon_list_item, parent, false);
+
+
+        if (convertView == null){
+            if (inflater == null){
+                inflater = LayoutInflater.from(getContext());
+            }
+            convertView = inflater.inflate(R.layout.pokemon_list_item, parent, false);
+        }
 
         TextView textoPokemonName = convertView.findViewById(R.id.textoPokemonName);
         TextView textoPokemonSpecie = convertView.findViewById(R.id.textoPokemonSpecie);
