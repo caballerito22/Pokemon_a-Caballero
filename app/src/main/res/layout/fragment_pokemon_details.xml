@@ -22,24 +22,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/textPokemonDetailSprite"
-        app:layout_constraintStart_toStartOf="@+id/textPokemonDetailSprite"
+        tools:layout_editor_absoluteX="176dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <TextView
-        android:id="@+id/textPokemonDetailSprite"
+        android:id="@+id/textPokemonDetailSpecie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_editor_absoluteX="175dp"
         tools:layout_editor_absoluteY="52dp" />
-
-    <TextView
-        android:id="@+id/textPokemonDetailSprite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="87dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
