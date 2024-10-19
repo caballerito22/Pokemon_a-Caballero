@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 public class PokemonAdapter extends ArrayAdapter<Pokemon> {
     public PokemonAdapter(@NonNull Context context, int resource, @NonNull Pokemon[] objects) {
         super(context, resource, objects);
@@ -36,9 +38,8 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
 
         textoPokemonName.setText(pokemon.getName());
         textoPokemonSpecie.setText(pokemon.getSpecies());
-/*
+
         Glide.with(getContext()).load(pokemon.getSprite()).into(imgPokemonSprite);
-*/
 
 
 
