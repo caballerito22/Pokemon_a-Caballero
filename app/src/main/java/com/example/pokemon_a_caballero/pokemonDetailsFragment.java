@@ -42,4 +42,14 @@ public class pokemonDetailsFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+   @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        Bundle args = getArguments();
+
+        if (args != null){
+            Pokemon pokemon = (Pokemon) args.getSerializable("pokemon");
+        }
+   }
+
 }

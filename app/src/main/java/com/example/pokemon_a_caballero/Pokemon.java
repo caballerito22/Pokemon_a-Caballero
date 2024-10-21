@@ -1,6 +1,8 @@
 package com.example.pokemon_a_caballero;
 
-public class Pokemon {
+import java.io.Serializable;
+
+public class Pokemon implements Serializable {
    private double id;
    private String name;
    private String species;

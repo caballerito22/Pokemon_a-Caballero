@@ -13,8 +13,10 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 public class PokemonAdapter extends ArrayAdapter<Pokemon> {
-    public PokemonAdapter(@NonNull Context context, int resource, @NonNull Pokemon[] objects) {
+    public PokemonAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Pokemon> objects) {
         super(context, resource, objects);
     }
 

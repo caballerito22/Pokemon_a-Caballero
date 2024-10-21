@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    ArrayList <String> pokemon;
+    ArrayList <Pokemon> pokemonlista;
 
     @Override
     public View onCreateView(
@@ -32,11 +32,11 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        pokemon = new ArrayList<>();
-        pokemon.add("Ana Maria");
+        pokemonlista = new ArrayList<>();
+        /*pokemon.add("Ana Maria");
         pokemon.add("Alvaro");
         pokemon.add("Samulea");
-
+*/
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -45,30 +45,34 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        ArrayAdapter<Pokemon> adapter = new PokemonAdapter(
                 getContext(),
                 R.layout.pokemon_list_item,
-                R.id.textoPokemonName,
-                pokemon);
+                pokemonlista);
         binding.listaPokemons.setAdapter(adapter);
 
-        //aqui va binding
 
-
-        //añadir al final, args
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Pokemon> pokemons = PokeAPI.buscar();
             getActivity().runOnUiThread(() -> {
                 for (Pokemon p : pokemons){
-                    pokemon.add(p.getName()); //o toString
+                    pokemonlista.add(p); //o toString
                 }
                 adapter.notifyDataSetChanged();
             });
         });
-
+        binding.listaPokemons.setOnItemClickListener(((parent, view1, position, id) -> {
+            Pokemon pokemon = adapter.getItem(position);
+            Bundle args = new Bundle();
+            args.putSerializable("Pokemon", pokemon);
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
+        }));
     }
+
+
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_main, menu);
