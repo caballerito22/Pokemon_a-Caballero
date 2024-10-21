@@ -28,9 +28,9 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
 
 
         if (convertView == null){
-            if (inflater == null){
-                inflater = LayoutInflater.from(getContext());
-            }
+
+              /*  inflater = LayoutInflater.from(getContext());*/
+
             convertView = inflater.inflate(R.layout.pokemon_list_item, parent, false);
         }
 
@@ -45,6 +45,6 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
 
 
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 }
