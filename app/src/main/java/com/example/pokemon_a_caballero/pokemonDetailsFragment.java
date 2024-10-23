@@ -14,17 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemon_a_caballero.databinding.FragmentPokemonDetailsBinding;
 
 public class pokemonDetailsFragment extends Fragment {
 
     private PokemonDetailsViewModel mViewModel;
-
+    private FragmentPokemonDetailsBinding binding;
 
     public static pokemonDetailsFragment newInstance() {
         return new pokemonDetailsFragment();
     }
 
-    @Override
+    public pokemonDetailsFragment(){}
+
+    /*@Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
@@ -34,12 +37,13 @@ public class pokemonDetailsFragment extends Fragment {
             Pokemon pokemon = (Pokemon) args.getSerializable("Pokemon");
             Log.d("XXX",pokemon.toString());
         }
-
         return inflater.inflate(R.layout.fragment_pokemon_details, container, false);
-    }
-    private void updateUi(Pokemon pokemon) {
-        Log.d("XXX", pokemon.toString());
-        //pone el bindig como en el pokeadapter
+    }*/
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentPokemonDetailsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -49,14 +53,25 @@ public class pokemonDetailsFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-   @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
 
-        if (args != null){
-            Pokemon pokemon = (Pokemon) args.getSerializable("pokemon");
-        }
-   }
+        if (args != null) {
+            Pokemon pokemon = (Pokemon) args.getSerializable("Pokemon");
+            if (pokemon != null) {
+                Log.d("XXXDetail", pokemon.toString());
+                showPokemon(pokemon);
 
+            }
+        }
+    }
+    private void showPokemon(Pokemon pokemon) {
+        Log.d("POKEMON",pokemon.toString());
+        binding.textoPokemonNameDetail.setText(pokemon.getName());
+        binding.textoPokemonSptiteDetail.setText(pokemon.getSprite());
+        binding.textoPokemonSpecieDetail.setText(pokemon.getSpecies());
+        Glide.with(getContext()).load(pokemon.getSprite()).into(binding.imgPokemonSpriteDetail);
+    }
 }
