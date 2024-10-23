@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imgPokemonSpriteDetail"
-        android:layout_width="78dp"
-        android:layout_height="71dp"
+        android:layout_width="104dp"
+        android:layout_height="102dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/textoPokemonNameDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="74dp"
+        android:layout_height="47dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgPokemonSpriteDetail"
@@ -28,20 +28,22 @@
 
     <TextView
         android:id="@+id/textoPokemonSptiteDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="81dp"
+        android:layout_height="48dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="@+id/textoPokemonNameDetail"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="@+id/textoPokemonNameDetail"
-        tools:layout_editor_absoluteY="54dp" />
+        tools:layout_editor_absoluteY="118dp" />
 
     <TextView
         android:id="@+id/textoPokemonSpecieDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="83dp"
+        android:layout_height="47dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="@+id/textoPokemonSptiteDetail"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textoPokemonSptiteDetail"
-        tools:layout_editor_absoluteY="87dp" />
+        tools:layout_editor_absoluteY="237dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
