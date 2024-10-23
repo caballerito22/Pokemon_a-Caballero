@@ -63,13 +63,14 @@ public class FirstFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             });
         });
-        binding.listaPokemons.setOnItemClickListener(((parent, view1, position, id) -> {
-            Pokemon pokemon = adapter.getItem(position);
+
+        binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l)->{
+            Pokemon pokemon = adapter.getItem(i);
             Bundle args = new Bundle();
             args.putSerializable("Pokemon", pokemon);
             NavHostFragment.findNavController(FirstFragment.this)
                     .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
-        }));
+        });
     }
 
 

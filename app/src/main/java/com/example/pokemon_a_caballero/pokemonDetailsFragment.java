@@ -13,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 public class pokemonDetailsFragment extends Fragment {
 
     private PokemonDetailsViewModel mViewModel;
+
 
     public static pokemonDetailsFragment newInstance() {
         return new pokemonDetailsFragment();
@@ -28,11 +31,15 @@ public class pokemonDetailsFragment extends Fragment {
         Bundle args = getArguments();
 
         if (args != null){
-            Pokemon pokemon = (Pokemon) args.getSerializable("pokemon");
+            Pokemon pokemon = (Pokemon) args.getSerializable("Pokemon");
             Log.d("XXX",pokemon.toString());
         }
 
         return inflater.inflate(R.layout.fragment_pokemon_details, container, false);
+    }
+    private void updateUi(Pokemon pokemon) {
+        Log.d("XXX", pokemon.toString());
+        //pone el bindig como en el pokeadapter
     }
 
     @Override
