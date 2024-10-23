@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PokeAPI {
-    String BASE_URL = "https://pokeapi.co/api/v2/pokemon/ditto";
+    String BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 
     String getNames(String name){
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
-                .appendPath("pokemon")
-                .appendQueryParameter("limit", "20")
+             /* .appendPath("pokemon")
+                .appendQueryParameter("limit", "30")*/
                 .build();
         String url = builtUri.toString();
 
@@ -50,9 +50,7 @@ public class PokeAPI {
                 Pokemon pokemon = new Pokemon(id,name,species,weight,sprite);
                 pokemons.add(pokemon);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
         return pokemons;
