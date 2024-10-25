@@ -3,6 +3,8 @@ package com.example.pokemon_a_caballero;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.OptIn;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
