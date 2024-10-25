@@ -31,7 +31,7 @@ public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
     ArrayList <Pokemon> pokemonlista;
-
+    ArrayAdapter<Pokemon> adapter;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,70 +49,84 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ArrayAdapter<Pokemon> adapter = new PokemonAdapter(
+
+        adapter = new PokemonAdapter(
                 getContext(),
                 R.layout.pokemon_list_item,
                 pokemonlista);
         binding.listaPokemons.setAdapter(adapter);
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Pokemon> pokemons = PokeAPI.buscar();
+
             getActivity().runOnUiThread(() -> {
-                for (Pokemon p : pokemons){
-                    pokemonlista.add(p); //o toString
+                for (Pokemon p : pokemons) {
+                    pokemonlista.add(p);
                 }
                 adapter.notifyDataSetChanged();
             });
         });
 
-        binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l)->{
+        binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
             Pokemon pokemon = adapter.getItem(i);
             Bundle args = new Bundle();
             args.putSerializable("Pokemon", pokemon);
+            Log.d("XXX", pokemon.toString());
             NavHostFragment.findNavController(FirstFragment.this)
                     .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
         });
-    }
-
-
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater){
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if (id == R.id.action_refresh) {
-            Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
-            Log.d("XXXMenu", "Click");
         }
-        if (id == R.id.action_settings) {
-            Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
-            Log.d("XXXMenu", "Click");
-            Intent i = new Intent(getActivity(), SettingsActivity.class);
-            startActivity(i);
-            return true;
+
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            int id = item.getItemId();
+
+            if (id == R.id.action_refresh) {
+                Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
+                Log.d("XXXMenu", "Click");
+            }
+
+            if (id == R.id.action_settings) {
+                Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
+                Log.d("XXXMenu", "Click");
+                Intent i = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(i);
+                return true;
+            } else if (id == R.id.action_refresh) {
+                refresh();
+            }
+
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+
+        void refresh () {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                ArrayList<Pokemon> pokemons = PokeAPI.buscar();
+
+                getActivity().runOnUiThread(() -> {
+                    for (Pokemon p : pokemons) {
+                        pokemonlista.add(p);
+                    }
+                    adapter.notifyDataSetChanged();
+                });
+            });
+            binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
+                Pokemon pokemon = adapter.getItem(i);
+                Bundle args = new Bundle();
+                args.putSerializable("Pokemon", pokemon);
+                Log.d("XXX", pokemon.toString());
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
+            });
+        }
+
+
+        @Override
+        public void onDestroyView () {
+            super.onDestroyView();
+            binding = null;
+        }
     }
-
-    private void refresh() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            String species = preferences.getString("species", "");
-            Toast.makeText(null,"",Toast.LENGTH_SHORT).show();
-        });
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-}
