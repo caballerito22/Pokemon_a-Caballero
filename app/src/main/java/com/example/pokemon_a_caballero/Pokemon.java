@@ -1,9 +1,15 @@
 package com.example.pokemon_a_caballero;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class Pokemon implements Serializable {
-   private double id;
+    @PrimaryKey(autoGenerate = true)
+
+    private double id;
    private String name;
    private String species;
    private Integer weight;
