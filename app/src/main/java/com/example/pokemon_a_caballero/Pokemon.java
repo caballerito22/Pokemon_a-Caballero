@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 public class Pokemon implements Serializable {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
 
     private double id;
    private String name;
