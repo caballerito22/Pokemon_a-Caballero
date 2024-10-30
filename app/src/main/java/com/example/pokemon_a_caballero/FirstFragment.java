@@ -113,6 +113,8 @@ public class FirstFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 });
             });
+
+
             binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
                 Pokemon pokemon = adapter.getItem(i);
                 Bundle args = new Bundle();
