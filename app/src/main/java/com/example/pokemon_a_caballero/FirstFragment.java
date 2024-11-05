@@ -94,8 +94,6 @@ public class FirstFragment extends Fragment {
                 Intent i = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(i);
                 return true;
-            } else if (id == R.id.action_refresh) {
-                refresh();
             }
 
             return super.onOptionsItemSelected(item);
