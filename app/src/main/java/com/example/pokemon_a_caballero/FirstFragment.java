@@ -32,6 +32,7 @@ public class FirstFragment extends Fragment {
     private FragmentFirstBinding binding;
     ArrayList <Pokemon> pokemonlista;
     ArrayAdapter<Pokemon> adapter;
+    PokemonsViewModel model;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
