@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 
@@ -76,6 +77,11 @@ public class FirstFragment extends Fragment {
             Log.d("XXX", pokemon.toString());
             NavHostFragment.findNavController(FirstFragment.this)
                     .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
+        });
+        model= new ViewModelProvider(this).get(PokemonsViewModel.class);
+        model.getPokemons().observe(getViewLifecycleOwner(),pokemons -> {
+            adapter.clear();
+            adapter.addAll(pokemons);
         });
         }
 
