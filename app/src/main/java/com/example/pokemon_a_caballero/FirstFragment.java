@@ -72,7 +72,7 @@ public class FirstFragment extends Fragment {
                 pokemonlista);
         binding.listaPokemons.setAdapter(adapter);
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+      /*  ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Pokemon> pokemons = PokeAPI.buscar();
 
@@ -82,21 +82,23 @@ public class FirstFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             });
-        });
+        });*/
 
-        binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
+        /*binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
             Pokemon pokemon = adapter.getItem(i);
             Bundle args = new Bundle();
             args.putSerializable("Pokemon", pokemon);
             Log.d("XXX", pokemon.toString());
             NavHostFragment.findNavController(FirstFragment.this)
                     .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
-        });
+        });*/
         model= new ViewModelProvider(this).get(PokemonsViewModel.class);
         model.getPokemons().observe(getViewLifecycleOwner(),pokemons -> {
-            adapter.clear();
-            adapter.addAll(pokemons);
+            //pongo pokemonlista en vez de adapter
+            pokemonlista.clear();
+            pokemonlista.addAll(pokemons);
         });
+
         }
 
         @Override
