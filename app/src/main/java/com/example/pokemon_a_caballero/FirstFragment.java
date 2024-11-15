@@ -44,8 +44,21 @@ public class FirstFragment extends Fragment {
 */
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         setHasOptionsMenu(true);
-        return binding.getRoot();
 
+        binding.listaPokemons.setAdapter(adapter);
+        binding.listaPokemons.setOnItemClickListener(((adapterView, view, position, id) ->{
+            Pokemon pokemon = (Pokemon) adapterView.getItemAtPosition(position);
+            Intent intent = new Intent(getContext(), FragmentFirstBinding.class);
+            intent.putExtra("pokemon", pokemon);
+            startActivity(intent);
+        } ));
+        model = new ViewModelProvider(this).get(PokemonsViewModel.class);
+        model.getPokemons().observe(getViewLifecycleOwner(), pokemons -> {
+            adapter.clear();
+            adapter.addAll(pokemons);
+
+        });
+        return binding.getRoot();
     }
 
 
