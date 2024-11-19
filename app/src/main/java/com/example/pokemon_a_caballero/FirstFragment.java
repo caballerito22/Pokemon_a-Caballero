@@ -1,10 +1,7 @@
 package com.example.pokemon_a_caballero;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,138 +16,104 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.preference.PreferenceManager;
 
 import com.example.pokemon_a_caballero.databinding.FragmentFirstBinding;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    ArrayList <Pokemon> pokemonlista;
-    ArrayAdapter<Pokemon> adapter;
-    PokemonsViewModel model;
+    private ArrayList<Pokemon> pokemonLista;
+    private ArrayAdapter<Pokemon> adapter;
+    private PokemonsViewModel model;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentFirstBinding.inflate(inflater);
+        View view = binding.getRoot();
 
-        pokemonlista = new ArrayList<>();
-        /*pokemon.add("Ana Maria");
-        pokemon.add("Alvaro");
-        pokemon.add("Samulea");
-*/
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-        setHasOptionsMenu(true);
+        pokemonLista = new ArrayList<>();
+        adapter = new PokemonAdapter(
+                getContext(),
+                R.layout.pokemon_list_item,
+                pokemonLista
+        );
 
         binding.listaPokemons.setAdapter(adapter);
-        binding.listaPokemons.setOnItemClickListener(((adapterView, view, position, id) ->{
-            Pokemon pokemon = (Pokemon) adapterView.getItemAtPosition(position);
-            Intent intent = new Intent(getContext(), FragmentFirstBinding.class);
-            intent.putExtra("pokemon", pokemon);
-            startActivity(intent);
-        } ));
+        binding.listaPokemons.setOnItemClickListener((adapterView, view1, position, id) -> {
+            Pokemon pokemon = adapter.getItem(position);
+            Bundle navigation = new Bundle();
+            navigation.putSerializable("Pokemon", pokemon);
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, navigation);
+        });
+
         model = new ViewModelProvider(this).get(PokemonsViewModel.class);
         model.getPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             adapter.clear();
             adapter.addAll(pokemons);
-
         });
-        return binding.getRoot();
 
+        return view;
     }
 
-
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
-        adapter = new PokemonAdapter(
-                getContext(),
-                R.layout.pokemon_list_item,
-                pokemonlista);
-        binding.listaPokemons.setAdapter(adapter);
-
-      /*  ExecutorService executor = Executors.newSingleThreadExecutor();
+    private void refresh() {
+        model.reload();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            ArrayList<Pokemon> pokemons = PokeAPI.buscar();
-
+            ArrayList<Pokemon> fetchedPokemons = PokeAPI.buscar();
             getActivity().runOnUiThread(() -> {
-                for (Pokemon p : pokemons) {
-                    pokemonlista.add(p);
-                }
+                pokemonLista.clear();
+                pokemonLista.addAll(fetchedPokemons);
                 adapter.notifyDataSetChanged();
             });
-        });*/
-
-        /*binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
-            Pokemon pokemon = adapter.getItem(i);
-            Bundle args = new Bundle();
-            args.putSerializable("Pokemon", pokemon);
-            Log.d("XXX", pokemon.toString());
-            NavHostFragment.findNavController(FirstFragment.this)
-                    .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
-        });*/
-        model= new ViewModelProvider(this).get(PokemonsViewModel.class);
-        model.getPokemons().observe(getViewLifecycleOwner(),pokemons -> {
-            //pongo pokemonlista en vez de adapter
-            pokemonlista.clear();
-            pokemonlista.addAll(pokemons);
         });
 
-        }
-
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            int id = item.getItemId();
-
-            if (id == R.id.action_refresh) {
-                refresh();
-                Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
-                Log.d("XXXMenu", "Click");
-            }
-
-            if (id == R.id.action_settings) {
-                Toast.makeText(getContext(), "Click!", Toast.LENGTH_SHORT).show();
-                Log.d("XXXMenu", "Click");
-                Intent i = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(i);
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-
-
-        void refresh () {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> {
-                ArrayList<Pokemon> pokemons = PokeAPI.buscar();
-
-                getActivity().runOnUiThread(() -> {
-                    for (Pokemon p : pokemons) {
-                        pokemonlista.add(p);
-                    }
-                    adapter.notifyDataSetChanged();
-                });
-            });
-
-
-            binding.listaPokemons.setOnItemClickListener((adapterView, fragment, i, l) -> {
-                Pokemon pokemon = adapter.getItem(i);
-                Bundle args = new Bundle();
-                args.putSerializable("Pokemon", pokemon);
-                Log.d("XXX", pokemon.toString());
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
-            });
-        }
-
-
-        @Override
-        public void onDestroyView () {
-            super.onDestroyView();
-            binding = null;
-        }
+        binding.listaPokemons.setOnItemClickListener((parent, view1, position, id) -> {
+            Pokemon selectedPokemon = adapter.getItem(position);
+            Bundle args = new Bundle();
+            args.putSerializable("Pokemon", selectedPokemon);
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_pokemonDetailsFragment, args);
+        });
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_refresh) {
+            Toast.makeText(getContext(), "Has hecho click", Toast.LENGTH_SHORT).show();
+            Log.d("XXXMenu", "CLick");
+            refresh();
+        } else if (id == R.id.action_settings) {
+            Log.d("XXX", "Settings Clicado");
+            Intent intent = new Intent(getContext(), SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+}
