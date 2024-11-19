@@ -98,7 +98,7 @@ public class FirstFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
-            Toast.makeText(getContext(), "Has hecho click", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Click hecho", Toast.LENGTH_SHORT).show();
             Log.d("XXXMenu", "CLick");
             refresh();
         } else if (id == R.id.action_settings) {
