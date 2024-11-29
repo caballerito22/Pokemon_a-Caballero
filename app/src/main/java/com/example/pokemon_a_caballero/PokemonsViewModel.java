@@ -15,7 +15,7 @@ public class PokemonsViewModel extends AndroidViewModel {
     private final Application app;
     private final AppDatabase appDataBase;
     private final PokemonDao pokemonDAO;
-    private LiveData<List<Pokemon>> pokemons;
+
 
     public PokemonsViewModel(Application app) {
         super(app);
